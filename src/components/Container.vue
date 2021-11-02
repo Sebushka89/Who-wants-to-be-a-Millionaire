@@ -1,6 +1,5 @@
 <template>
   <div>
-    Hello World
     <Question />
     <Answer />
   </div>

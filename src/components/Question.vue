@@ -1,6 +1,6 @@
 <template>
   <div>
-    Question
+      {{questions}}
   </div>
 </template>
 
@@ -9,7 +9,12 @@ export default {
   name: 'Question',
   props: {
     
-  }
+  },
+  data() {
+        return {
+           questions:["1- Come ti chiami?", "2- 2+2?", "3- quanti anni hai?"] 
+        }
+    },
 }
 </script>
 

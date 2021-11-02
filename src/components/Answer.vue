@@ -9,7 +9,12 @@ export default {
   name: 'Answer',
   props: {
     
-  }
+  },
+  data() {
+        return {
+           answers:["1- Come ti chiami?", "2- 2+2?", "3- quanti anni hai?"] 
+        }
+    },
 }
 </script>
 
