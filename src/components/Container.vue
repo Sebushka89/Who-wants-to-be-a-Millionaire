@@ -1,7 +1,7 @@
 <template>
   <div>
     <Question :domandarispostaRandom="domandarispostaRandom" />
-    <Answer />
+    <Answer @checkAnswer="checkRisposta" :domandarispostaRandom="domandarispostaRandom"/>
   </div>
 </template>
 
@@ -19,7 +19,10 @@ export default {
   },
   data() {
         return {
+          domandeRandomId:[],
           domandarispostaRandom: [],
+          questionAnswered: false,
+          questionIsCorrect: false,
           domande: [
             {
               domanda: "Quante champions ha vinto il Milan?",
@@ -39,7 +42,7 @@ export default {
               risposta: {
                 a: "Cristoforo Colombo",
                 b: "Carlo Pellegatti",
-                c: "216",
+                c: "Andrea Calzolari",
                 d: "Amerigo Vespucci",
               },
               rispostaCorretta: "Cristoforo Colombo",
@@ -96,11 +99,13 @@ export default {
               risposta: { a: "2", b: "5", c: "7", d: "10" },
               rispostaCorretta: "2",
             },
-          ], 
+          ],
+          
         }
     },
     mounted(){
-      this.nuovaDomanda()
+      this.nuovaDomanda();
+      this.getRandomNumbers(5);
     },
     methods:{
         getRandomDomanda(max) {
@@ -113,8 +118,26 @@ export default {
               this.domandarispostaRandom.push({domanda:el.domanda,risposta:el.risposta,id:el.id, rispostaCorretta:el.rispostaCorretta})
             }
           })
+        },
+        checkRisposta(checkAnswer) {
+          if(checkAnswer==this.domandarispostaRandom[0].rispostaCorretta){
+            console.log("risposta corretta")
+          }else{
+            console.log("risposta sbagliata")
+          }
+        },
+        getRandomNumbers(num) {
+          let max = this.domande.length
+          while(this.domandeRandomId.length < num){
+            let random = Math.floor(Math.random() * (max)+1)
+            if(!this.domandeRandomId.includes(random)){
+              this.domandeRandomId.push(random)
+            }
+          }
         }
     },
+    computed:{
+    }
 }
 </script>
 

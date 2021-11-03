@@ -2,7 +2,6 @@
   <div >
     <div v-for="(dom,index) in domandarispostaRandom" :key="index">
       {{dom.domanda}}
-      {{dom.risposta}}
     </div>
   </div>
 </template>
