@@ -1,27 +1,20 @@
 <template>
-  <div >
-    <div v-for="(dom,index) in domandarispostaRandom" :key="index">
+    <div >
       <div class="container">
         <div class="row">
-          <div class="col-12">
-            <div class="btn-success mt-3"  @click="$emit('checkAnswer',dom.risposta.a )">{{dom.risposta.a}}</div>
-            <div class="btn-success mt-3"  @click="$emit('checkAnswer',dom.risposta.b)">{{dom.risposta.b}}</div>
-          </div>
-          <div class="col-12 ">
-            <div class="btn-success mt-3"  @click="$emit('checkAnswer',dom.risposta.c )">{{dom.risposta.c}}</div>
-            <div class="btn-success mt-3"  @click="$emit('checkAnswer',dom.risposta.d)">{{dom.risposta.d}}</div>
+          <div v-for="(risp,index) in domandarispostaRandom.risposta" :key="index" class="col-6">
+            <div class="btn-success mt-3"  @click="$emit('checkAnswer',risp )">{{risp}}</div>
           </div>
         </div> 
       </div>
     </div>  
-  </div>
 </template>
 
 <script>
 export default {
   name: 'Answer',
   props: {
-    domandarispostaRandom: Array,
+    domandarispostaRandom: Object,
   },
   data() {
         return {

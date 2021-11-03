@@ -1,7 +1,7 @@
 <template>
   <div >
-    <div v-for="(dom,index) in domandarispostaRandom" :key="index">
-      {{dom.domanda}}
+    <div >
+      {{domandarispostaRandom.domanda}}
     </div>
   </div>
 </template>
@@ -10,7 +10,7 @@
 export default {
   name: 'Question',
   props: {
-    domandarispostaRandom: Array,
+    domandarispostaRandom: Object,
   },
 
 }

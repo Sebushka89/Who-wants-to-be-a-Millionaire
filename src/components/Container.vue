@@ -1,7 +1,11 @@
 <template>
-  <div>
-    <Question :domandarispostaRandom="domandarispostaRandom" />
-    <Answer @checkAnswer="checkRisposta" :domandarispostaRandom="domandarispostaRandom"/>
+  <div v-if="nextStep">
+    <Question :domandarispostaRandom="domandaAttuale" />
+    <Answer @checkAnswer="checkRisposta" :domandarispostaRandom="domandaAttuale"/>
+  </div>
+  <div v-else>
+    <h2>per te il Grande Fratello finisce qui, coglione</h2>
+    <button @click="nuovaPartita()">Gioca di nuovo coglione</button>
   </div>
 </template>
 
@@ -19,10 +23,11 @@ export default {
   },
   data() {
         return {
+          nextStep: true,
           domandeRandomId:[],
+          domandaAttuale:{},
           domandarispostaRandom: [],
-          questionAnswered: false,
-          questionIsCorrect: false,
+          domandaAttualeId: 0,
           domande: [
             {
               domanda: "Quante champions ha vinto il Milan?",
@@ -50,8 +55,8 @@ export default {
             {
               domanda: "Quando è iniziata la prima guerra mondiale?",
               id: 4,
-              risposta: { a: "1993", b: "1910", c: "1915", d: "1879" },
-              rispostaCorretta: "1915",
+              risposta: { a: "1993", b: "1910", c: "1914", d: "1879" },
+              rispostaCorretta: "1914",
             },
             {
               domanda: "Chi era il frontman dei Queen?",
@@ -104,26 +109,16 @@ export default {
         }
     },
     mounted(){
-      this.nuovaDomanda();
       this.getRandomNumbers(5);
     },
     methods:{
-        getRandomDomanda(max) {
-        return Math.floor(Math.random() * (max-1)+1)
-        }, 
-        nuovaDomanda(){
-          let numeroRandom= this.getRandomDomanda(this.domande.length)
-          this.domande.forEach(el=>{
-            if(el.id == numeroRandom){
-              this.domandarispostaRandom.push({domanda:el.domanda,risposta:el.risposta,id:el.id, rispostaCorretta:el.rispostaCorretta})
-            }
-          })
-        },
         checkRisposta(checkAnswer) {
-          if(checkAnswer==this.domandarispostaRandom[0].rispostaCorretta){
+          if(checkAnswer == this.domandaAttuale.rispostaCorretta){
             console.log("risposta corretta")
+            this.getDomandaAttuale()
           }else{
-            console.log("risposta sbagliata")
+            this.nextStep = false
+            //alert("risposta sbagliata, coglione")
           }
         },
         getRandomNumbers(num) {
@@ -134,7 +129,20 @@ export default {
               this.domandeRandomId.push(random)
             }
           }
+          this.getDomandaAttuale()
+        },
+      getDomandaAttuale(){
+        this.domandaAttuale=this.domande[this.domandeRandomId[this.domandaAttualeId]]
+        this.domandaAttualeId ++
+        if(this.domandaAttualeId==6){
+          alert("hai vinto,coglione")
         }
+      },
+      nuovaPartita(){
+        this.nextStep = true
+        this.domandaAttualeId = 0
+        this.getRandomNumbers(5)
+      }
     },
     computed:{
     }
